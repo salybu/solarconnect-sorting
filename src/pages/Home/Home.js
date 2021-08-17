@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const Home = () => {
+  const [value, setValue] = useState('');
+
+  const onChange = (e) => {
+    let { value } = e.target;
+
+    if (!value || value === value.match(/[0-9]+,?/g)?.join('')) {
+      setValue(value);
+    }
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (value[value.length - 1] === ',') {
+      alert('마지막 콤마를 제거해 주세요.');
+      return;
+    }
+
+    let data = value.split(',').map((elem) => parseInt(elem));
+  };
+
   return (
     <SortingMachineBox>
-      <form>
+      <form onSubmit={onSubmit}>
         <InputField>
-          <input type='text' name='numbers' required />
+          <input type='text' name='numbers' value={value} required onChange={onChange} />
           <label htmlFor='numbers'>숫자 입력</label>
         </InputField>
-        <StartButton>
+        <StartButton type='submit'>
           <span></span>
           <span></span>
           <span></span>
