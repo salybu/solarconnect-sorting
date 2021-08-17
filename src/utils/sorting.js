@@ -88,4 +88,65 @@ function insertionSort(array, isAscending) {
   return answer;
 }
 
-export { bubbleSort, insertionSort, selectionSort };
+function quickSort(arr, compareFn) {
+  if (!Array.isArray(arr)) {
+    throw TypeError('The first parameter must be an array');
+  }
+
+  const compareFnType = typeof compareFn;
+
+  if (compareFnType !== 'function' && compareFnType !== 'undefined') {
+    throw TypeError('The comparison function must be either a function or undefined');
+  }
+
+  if (compareFnType === 'undefined') {
+    compareFn = (a, b) => {
+      if (a < b) return -1;
+      if (a === b) return 0;
+      if (a > b) return 1;
+    };
+  }
+
+  if (arr.length < 2) return;
+
+  sort(arr, 0, arr.length - 1, compareFn);
+}
+
+function sort(arr, left, right, compareFn) {
+  if (left >= right) return;
+
+  const pivot = left;
+  let i = pivot + 1;
+  let j = right;
+
+  while (i <= j) {
+    while (i <= right) {
+      const result = compareFn(arr[i], arr[pivot]);
+
+      if (isNaN(result) || typeof result !== 'number') return;
+      if (result > 0) break;
+
+      i++;
+    }
+
+    while (j > left) {
+      const result = compareFn(arr[j], arr[pivot]);
+
+      if (isNaN(result) || typeof result !== 'number') return;
+      if (result <= 0) break;
+
+      j--;
+    }
+
+    if (i >= j) break;
+
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+
+  [arr[j], arr[pivot]] = [arr[pivot], arr[j]];
+
+  sort(arr, left, j - 1, compareFn);
+  sort(arr, j + 1, right, compareFn);
+}
+
+export { bubbleSort, insertionSort, selectionSort, quickSort };
