@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import twoDigitsForTimer from 'utils/twoDigitsForTimer';
+import theme from 'styles/theme';
 
 const Timer = ({ locale }) => {
   const [time, setTime] = useState('');
@@ -66,7 +67,7 @@ const StyledTimer = styled.div`
   margin: 2rem 0;
   padding: 1rem 0.5rem;
   text-align: center;
-  border: 2px dotted #03e9f4;
+  border: 2px dotted ${theme.colors.primary};
   color: white;
   font-size: 2rem;
 

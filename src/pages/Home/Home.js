@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 
 import { bubbleSort, selectionSort, insertionSort, quickSort } from 'utils/sorting';
 import Timer from 'components/Timer';
+import theme from 'styles/theme';
 
 const sortTypeToMethod = {
   bubble: bubbleSort,
@@ -154,10 +155,10 @@ const InputField = styled.div`
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
-    color: #fff;
+    color: ${theme.colors.second};
     margin-bottom: 30px;
     border: none;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid ${theme.colors.second};
     outline: none;
     background: transparent;
   }
@@ -168,7 +169,7 @@ const InputField = styled.div`
     left: 0;
     padding: 10px 0;
     font-size: 16px;
-    color: #fff;
+    color: ${theme.colors.second};
     pointer-events: none;
     transition: 0.5s;
   }
@@ -177,7 +178,7 @@ const InputField = styled.div`
   input:focus ~ label {
     top: -20px;
     left: 0;
-    color: #03e9f4;
+    color: ${theme.colors.primary};
     font-size: 12px;
   }
 `;
@@ -185,9 +186,9 @@ const InputField = styled.div`
 const ResultField = styled.div`
   font-size: 16px;
   margin-bottom: 20px;
-  color: #fff;
+  color: ${theme.colors.second};
   & h1 {
-    color: #03e9f4;
+    color: ${theme.colors.primary};
   }
   & div {
     padding: 10px 0;
@@ -196,7 +197,7 @@ const ResultField = styled.div`
 
 const SelectField = styled.select`
   outline: none;
-  border: 1px solid #03e9f4;
+  border: 1px solid ${theme.colors.primary};
   border-radius: 8px;
   background: transparent;
   padding: 10px 20px;
@@ -251,7 +252,7 @@ const StartButton = styled.button`
   position: relative;
   display: inline-block;
   padding: 10px 20px;
-  color: #03e9f4;
+  color: ${theme.colors.primary};
   font-size: 16px;
   text-decoration: none;
   text-transform: uppercase;
@@ -261,10 +262,10 @@ const StartButton = styled.button`
   width: 120px;
 
   &:hover {
-    background: #03e9f4;
-    color: #fff;
+    background: ${theme.colors.primary};
+    color: ${theme.colors.second};
     border-radius: 5px;
-    box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 100px #03e9f4;
+    box-shadow: 0 0 5px ${theme.colors.primary}, 0 0 25px ${theme.colors.primary}, 0 0 50px ${theme.colors.primary}, 0 0 100px ${theme.colors.primary};
   }
 
   & > span {
@@ -277,7 +278,7 @@ const StartButton = styled.button`
     left: -100%;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #03e9f4);
+    background: linear-gradient(90deg, transparent, ${theme.colors.primary});
     animation: ${btnAnimation1} 1s linear infinite;
   }
 
@@ -286,7 +287,7 @@ const StartButton = styled.button`
     right: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(180deg, transparent, #03e9f4);
+    background: linear-gradient(180deg, transparent, ${theme.colors.primary});
     animation: ${btnAnimation2} 1s linear infinite;
     animation-delay: 0.25s;
   }
@@ -296,7 +297,7 @@ const StartButton = styled.button`
     right: -100%;
     width: 100%;
     height: 2px;
-    background: linear-gradient(270deg, transparent, #03e9f4);
+    background: linear-gradient(270deg, transparent, ${theme.colors.primary});
     animation: ${btnAnimation3} 1s linear infinite;
     animation-delay: 0.5s;
   }
@@ -306,7 +307,7 @@ const StartButton = styled.button`
     left: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(360deg, transparent, #03e9f4);
+    background: linear-gradient(360deg, transparent, ${theme.colors.primary});
     animation: ${btnAnimation4} 1s linear infinite;
     animation-delay: 0.75s;
   }
