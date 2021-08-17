@@ -1,4 +1,4 @@
-# SolarConnect Sorting
+# SolarConnect Sorting Machine 과제
 
 ## 데모 링크
 
