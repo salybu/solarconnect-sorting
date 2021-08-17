@@ -101,6 +101,7 @@ const Home = () => {
 
   return (
     <SortingMachineBox>
+      <Title>Sorting Machine</Title>
       <Timer locale='ko-KR' />
       <form onSubmit={onStartSorting}>
         <InputField>
@@ -135,6 +136,12 @@ const Home = () => {
     </SortingMachineBox>
   );
 };
+
+const Title = styled.h1`
+  text-align: center;
+  color: ${theme.colors.second};
+  font-size: 2rem;
+`;
 
 const SortingMachineBox = styled.div`
   position: absolute;
