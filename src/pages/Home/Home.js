@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { bubbleSort, selectionSort, insertionSort } from 'utils/sorting';
 
+import { bubbleSort, selectionSort, insertionSort } from 'utils/sorting';
 import Timer from 'components/Timer';
 
 const sortTypeToMethod = {
@@ -11,90 +11,101 @@ const sortTypeToMethod = {
 };
 
 const Home = () => {
-  const [value, setValue] = useState('');
-  const [sort, setSort] = useState({
+  const [inputNumbers, setInputNumbers] = useState('');
+  const [sortInfo, setSortInfo] = useState({
     type: 'bubble',
     resultAsc: null,
     resultDesc: null,
   });
 
-  const onChange = (e) => {
-    let { value } = e.target;
+  const [calculating, setCalculating] = useState(false);
+
+  const onChangeInputNumbers = (e) => {
+    if (calculating) return;
+
+    const { value } = e.target;
 
     if (!value || value === value.match(/[0-9]+,?/g)?.join('')) {
-      setValue(value);
+      setInputNumbers(value);
     }
   };
 
-  const changeSort = (e) => {
-    let { value } = e.target;
-    setSort({
-      ...sort,
+  const onChangeSortInfo = (e) => {
+    const { value } = e.target;
+
+    setSortInfo({
+      ...sortInfo,
       type: value,
     });
   };
 
-  const onSubmit = (e) => {
+  const onStartSorting = (e) => {
     e.preventDefault();
 
-    let result = value;
-    if (value[value.length - 1] === ',') {
-      result = value.slice(0, -1);
-      setValue(result);
+    if (calculating) return;
+
+    setCalculating(true);
+
+    let result = inputNumbers;
+
+    if (inputNumbers[inputNumbers.length - 1] === ',') {
+      result = inputNumbers.slice(0, -1);
+      setInputNumbers(result);
     }
 
     getSortResult(true, result);
   };
 
   const getSortResult = (isAsc = true, input) => {
-    let data = input.split(',').map((elem) => parseInt(elem));
-    const sortMethod = sortTypeToMethod[sort.type];
-    let result = sortMethod(data, isAsc).toString().replaceAll(',', ', ');
+    const data = input.split(',').map((elem) => parseInt(elem));
+    const sortMethod = sortTypeToMethod[sortInfo.type];
+    const result = sortMethod(data, isAsc).toString().replaceAll(',', ', ');
 
     if (isAsc) {
-      setSort({
-        ...sort,
+      setSortInfo({
+        ...sortInfo,
         resultAsc: result,
         resultDesc: null,
       });
     } else {
-      setSort({
-        ...sort,
+      setSortInfo({
+        ...sortInfo,
         resultDesc: result,
       });
     }
   };
 
   useEffect(() => {
-    if (sort.resultAsc) {
-      let timer = setTimeout(() => {
-        getSortResult(false, value);
+    if (sortInfo.resultAsc) {
+      const timer = setTimeout(() => {
+        getSortResult(false, inputNumbers);
+        setCalculating(false);
       }, 3000);
 
       return () => {
         clearTimeout(timer);
       };
     }
-  }, [sort]);
+  }, [sortInfo.resultAsc, calculating]);
 
   return (
     <SortingMachineBox>
       <Timer locale='ko-KR' />
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onStartSorting}>
         <InputField>
-          <input type='text' name='numbers' value={value} required onChange={onChange} />
+          <input type='text' name='numbers' value={inputNumbers} required autoComplete='off' onChange={onChangeInputNumbers} />
           <label htmlFor='numbers'>숫자 입력</label>
         </InputField>
         <ResultField>
           <h1>결과 (오름차순)</h1>
-          <div>{sort.resultAsc}</div>
+          <div>{sortInfo.resultAsc}</div>
         </ResultField>
         <ResultField>
           <h1>결과 (내림차순)</h1>
-          <div>{sort.resultDesc}</div>
+          <div>{calculating ? '계산중...' : sortInfo.resultDesc}</div>
         </ResultField>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <SelectField name='type' value={sort.type} onChange={changeSort}>
+          <SelectField name='type' value={sortInfo.type} disabled={calculating} onChange={onChangeSortInfo}>
             <option value='bubble'>버블정렬</option>
             <option value='select'>선택정렬</option>
             <option value='insert'>삽입정렬</option>
