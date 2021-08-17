@@ -177,11 +177,9 @@ const SelectField = styled.select`
   outline: none;
   border: 1px solid #03e9f4;
   border-radius: 8px;
-  color: white;
   background: transparent;
   padding: 10px 20px;
   font-size: 16px;
-  /* margin-right: 20px; */
   width: 180px;
   height: 40px;
   text-align-last: center;
@@ -238,7 +236,6 @@ const StartButton = styled.button`
   text-transform: uppercase;
   overflow: hidden;
   transition: 0.5s;
-  /* margin-top: 10px; */
   letter-spacing: 4px;
   width: 120px;
 
