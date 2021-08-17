@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 
 import { bubbleSort, selectionSort, insertionSort, quickSort } from 'utils/sorting';
 import Timer from 'components/Timer';
+import Spinner from 'components/Spinner';
 import theme from 'styles/theme';
 
 const sortTypeToMethod = {
@@ -126,7 +127,7 @@ const Home = () => {
             <span></span>
             <span></span>
             <span></span>
-            시작
+            {calculating ? <Spinner /> : '시작'}
           </StartButton>
         </div>
       </form>
