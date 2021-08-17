@@ -1,7 +1,7 @@
 # SolarConnect Sorting Machine 과제
 
 ## 데모 링크
-https://salybu.github.io/solarconnect-sorting/index.html
+https://salybu.github.io/solarconnect-sorting/
 
 ## 실행 방법
 패키지 매니저 Yarn 사용
