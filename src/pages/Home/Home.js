@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import { bubbleSort, selectionSort, insertionSort } from 'utils/sorting';
+import { bubbleSort, selectionSort, insertionSort, quickSort } from 'utils/sorting';
 import Timer from 'components/Timer';
 
 const sortTypeToMethod = {
   bubble: bubbleSort,
   select: selectionSort,
   insert: insertionSort,
+  quick: quickSort,
 };
 
 const Home = () => {
@@ -59,7 +60,15 @@ const Home = () => {
   const getSortResult = (isAsc = true, input) => {
     const data = input.split(',').map((elem) => parseInt(elem));
     const sortMethod = sortTypeToMethod[sortInfo.type];
-    const result = sortMethod(data, isAsc).toString().replaceAll(',', ', ');
+
+    let result;
+
+    if (sortInfo.type === 'quick') {
+      isAsc ? sortMethod(data, (a, b) => a - b) : sortMethod(data, (a, b) => b - a);
+      result = data.toString().replaceAll(',', ', ');
+    } else {
+      result = sortMethod(data, isAsc).toString().replaceAll(',', ', ');
+    }
 
     if (isAsc) {
       setSortInfo({
@@ -109,6 +118,7 @@ const Home = () => {
             <option value='bubble'>버블정렬</option>
             <option value='select'>선택정렬</option>
             <option value='insert'>삽입정렬</option>
+            <option value='quick'>퀵정렬</option>
           </SelectField>
           <StartButton type='submit'>
             <span></span>
@@ -188,11 +198,9 @@ const SelectField = styled.select`
   outline: none;
   border: 1px solid #03e9f4;
   border-radius: 8px;
-  color: white;
   background: transparent;
   padding: 10px 20px;
   font-size: 16px;
-  /* margin-right: 20px; */
   width: 180px;
   height: 40px;
   text-align-last: center;
@@ -249,7 +257,6 @@ const StartButton = styled.button`
   text-transform: uppercase;
   overflow: hidden;
   transition: 0.5s;
-  /* margin-top: 10px; */
   letter-spacing: 4px;
   width: 120px;
 
