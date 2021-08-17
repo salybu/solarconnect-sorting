@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { bubbleSort, selectionSort, insertionSort } from 'utils/sorting';
+
+const sortTypeToMethod = {
+  bubble: bubbleSort,
+  select: selectionSort,
+  insert: insertionSort,
+};
 
 const Home = () => {
   const [value, setValue] = useState('');
+  const [sort, setSort] = useState({
+    type: 'bubble',
+    resultAsc: null,
+    resultDesc: null,
+  });
 
   const onChange = (e) => {
     let { value } = e.target;
@@ -12,16 +24,56 @@ const Home = () => {
     }
   };
 
+  const changeSort = (e) => {
+    let { value } = e.target;
+    setSort({
+      ...sort,
+      type: value,
+    });
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
+    let result = value;
     if (value[value.length - 1] === ',') {
-      alert('마지막 콤마를 제거해 주세요.');
-      return;
+      result = value.slice(0, -1);
+      setValue(result);
     }
 
-    let data = value.split(',').map((elem) => parseInt(elem));
+    getSortResult(true, result);
   };
+
+  const getSortResult = (isAsc = true, input) => {
+    let data = input.split(',').map((elem) => parseInt(elem));
+    const sortMethod = sortTypeToMethod[sort.type];
+    let result = sortMethod(data, isAsc).toString();
+
+    if (isAsc) {
+      setSort({
+        ...sort,
+        resultAsc: result,
+        resultDesc: null,
+      });
+    } else {
+      setSort({
+        ...sort,
+        resultDesc: result,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (sort.resultAsc) {
+      let timer = setTimeout(() => {
+        getSortResult(false, value);
+      }, 3000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [sort.resultAsc, sort.type]);
 
   return (
     <SortingMachineBox>
@@ -30,6 +82,23 @@ const Home = () => {
           <input type='text' name='numbers' value={value} required onChange={onChange} />
           <label htmlFor='numbers'>숫자 입력</label>
         </InputField>
+        {sort.resultAsc && (
+          <ResultField>
+            <h1>결과 (오름차순)</h1>
+            {sort.resultAsc}
+          </ResultField>
+        )}
+        {sort.resultDesc && (
+          <ResultField>
+            <h1>결과 (내림차순)</h1>
+            {sort.resultDesc}
+          </ResultField>
+        )}
+        <SelectField name='type' value={sort.type} onChange={changeSort}>
+          <option value='bubble'>버블정렬</option>
+          <option value='select'>선택정렬</option>
+          <option value='insert'>삽입정렬</option>
+        </SelectField>
         <StartButton type='submit'>
           <span></span>
           <span></span>
@@ -90,6 +159,26 @@ const InputField = styled.div`
   }
 `;
 
+const ResultField = styled.div`
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #fff;
+  & h1 {
+    color: #03e9f4;
+  }
+`;
+
+const SelectField = styled.select`
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-right: 20px;
+  width: 60%;
+  text-align-last: center;
+  text-align: center;
+  -ms-text-align-last: center;
+  -moz-text-align-last: center;
+`;
+
 const btnAnimation1 = keyframes`
   0% {
     left: -100%;
@@ -140,6 +229,7 @@ const StartButton = styled.button`
   transition: 0.5s;
   margin-top: 40px;
   letter-spacing: 4px;
+  width: 30%;
 
   &:hover {
     background: #03e9f4;

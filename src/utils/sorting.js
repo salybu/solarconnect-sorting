@@ -73,6 +73,32 @@ function ascendingSelectionSort(arr) {
   return answer;
 }
 
+function selectionSort(arr, isAscending) {
+  let Index;
+  let answer = arr;
+
+  // 제일 마지막 인덱스가 minIndex가 될 때는 더이상 비교할 요소들이 없기이 반복 조건을 배열 길이 - 1로 세팅.
+  for (let i = 0; i < arr.length - 1; i++) {
+    Index = i;
+
+    for (let j = i + 1; j < arr.length; j++) {
+      const sortingCondition = isAscending ? arr[Index] > arr[j] : arr[Index] < arr[j];
+      if (sortingCondition) {
+        Index = j;
+      }
+    }
+    // console.log(`maxNumIndex : ${maxNumIndex}`);
+    // 순회를 시작하는 인덱스의 값이 최소값이 아닌 경우, 그러니까 실제로 스왑이 필요한 경우에만 스왑 실행
+    if (Index > i) {
+      [arr[i], arr[Index]] = [arr[Index], arr[i]];
+    }
+
+    // console.log(arr);
+  }
+
+  return answer;
+}
+
 /**
  * @param {*} array : input 배열
  * @param {*} isAscending : 정렬 순서 조건. true면 오름차면, false면 내림차순.
@@ -88,7 +114,7 @@ function insertionSort(array, isAscending) {
       // 내림차순으로 변경시 아래 조건문 부등호만 바꾸면 된다.
       const sortingCondition = isAscending ? insertValue < array[j] : insertValue > array[j];
 
-      if (insertValue < array[j]) {
+      if (sortingCondition) {
         array[j + 1] = array[j];
       } else {
         array[j + 1] = insertValue;
@@ -102,11 +128,11 @@ function insertionSort(array, isAscending) {
       // console.log(arr);
     }
 
-    console.log(array);
-    console.log(`패스스루 : ${i} 번째`);
+    // console.log(array);
+    // console.log(`패스스루 : ${i} 번째`);
   }
 
   return answer;
 }
 
-export { bubbleSort, descendingSelectionSort, ascendingSelectionSort, insertionSort };
+export { bubbleSort, descendingSelectionSort, ascendingSelectionSort, insertionSort, selectionSort };
