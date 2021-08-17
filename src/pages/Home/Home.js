@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { bubbleSort, selectionSort, insertionSort } from 'utils/sorting';
 
+import Timer from 'components/Timer';
+
 const sortTypeToMethod = {
   bubble: bubbleSort,
   select: selectionSort,
@@ -77,6 +79,7 @@ const Home = () => {
 
   return (
     <SortingMachineBox>
+      <Timer locale='ko-KR' />
       <form onSubmit={onSubmit}>
         <InputField>
           <input type='text' name='numbers' value={value} required onChange={onChange} />
@@ -107,6 +110,7 @@ const Home = () => {
           시작
         </StartButton>
       </form>
+      <Timer locale='en-US' />
     </SortingMachineBox>
   );
 };
@@ -115,7 +119,7 @@ const SortingMachineBox = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 480px;
+  width: 520px;
   padding: 40px;
   transform: translate(-50%, -50%);
   background: rgba(0, 0, 0, 0.5);
