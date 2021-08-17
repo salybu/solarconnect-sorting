@@ -47,7 +47,7 @@ const Home = () => {
   const getSortResult = (isAsc = true, input) => {
     let data = input.split(',').map((elem) => parseInt(elem));
     const sortMethod = sortTypeToMethod[sort.type];
-    let result = sortMethod(data, isAsc).toString();
+    let result = sortMethod(data, isAsc).toString().replaceAll(',', ', ');
 
     if (isAsc) {
       setSort({
@@ -73,7 +73,7 @@ const Home = () => {
         clearTimeout(timer);
       };
     }
-  }, [sort.resultAsc, sort.type]);
+  }, [sort]);
 
   return (
     <SortingMachineBox>
@@ -82,18 +82,14 @@ const Home = () => {
           <input type='text' name='numbers' value={value} required onChange={onChange} />
           <label htmlFor='numbers'>숫자 입력</label>
         </InputField>
-        {sort.resultAsc && (
-          <ResultField>
-            <h1>결과 (오름차순)</h1>
-            {sort.resultAsc}
-          </ResultField>
-        )}
-        {sort.resultDesc && (
-          <ResultField>
-            <h1>결과 (내림차순)</h1>
-            {sort.resultDesc}
-          </ResultField>
-        )}
+        <ResultField>
+          <h1>결과 (오름차순)</h1>
+          <div>{sort.resultAsc}</div>
+        </ResultField>
+        <ResultField>
+          <h1>결과 (내림차순)</h1>
+          <div>{sort.resultDesc}</div>
+        </ResultField>
         <SelectField name='type' value={sort.type} onChange={changeSort}>
           <option value='bubble'>버블정렬</option>
           <option value='select'>선택정렬</option>
@@ -166,6 +162,9 @@ const ResultField = styled.div`
   & h1 {
     color: #03e9f4;
   }
+  & div {
+    padding: 10px 0;
+  }
 `;
 
 const SelectField = styled.select`
@@ -227,7 +226,7 @@ const StartButton = styled.button`
   text-transform: uppercase;
   overflow: hidden;
   transition: 0.5s;
-  margin-top: 40px;
+  margin-top: 10px;
   letter-spacing: 4px;
   width: 30%;
 
