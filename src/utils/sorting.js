@@ -21,63 +21,16 @@ function bubbleSort(array, isAscending) {
   return array;
 }
 
-// 내림차순 선택정렬
-function descendingSelectionSort(arr) {
-  let answer = arr;
-  let maxNumIndex;
-
-  // 제일 마지막 인덱스가 minIndex가 될 때는 더이상 비교할 요소들이 없기이 반복 조건을 배열 길이 - 1로 세팅.
-  for (let i = 0; i < arr.length - 1; i++) {
-    maxNumIndex = i;
-
-    for (let j = i + 1; j < arr.length; j++) {
-      if (arr[maxNumIndex] < arr[j]) {
-        maxNumIndex = j;
-      }
-    }
-    // console.log(`maxNumIndex : ${maxNumIndex}`);
-    // 순회를 시작하는 인덱스의 값이 최소값이 아닌 경우, 그러니까 실제로 스왑이 필요한 경우에만 스왑 실행
-    if (maxNumIndex > i) {
-      [arr[i], arr[maxNumIndex]] = [arr[maxNumIndex], arr[i]];
-    }
-
-    console.log(arr);
-  }
-
-  return answer;
-}
-
-// 오름차순 선택정렬
-function ascendingSelectionSort(arr) {
-  let answer = arr;
-  let minNumIndex;
-
-  // 제일 마지막 인덱스가 minIndex가 될 때는 더이상 비교할 요소들이 없기이 반복 조건을 배열 길이 - 1로 세팅.
-  for (let i = 0; i < arr.length - 1; i++) {
-    minNumIndex = i;
-
-    for (let j = i + 1; j < arr.length; j++) {
-      if (arr[minNumIndex] > arr[j]) {
-        minNumIndex = j;
-      }
-    }
-    // console.log(`minNumIndex : ${minNumIndex}`);
-    // 순회를 시작하는 인덱스의 값이 최소값이 아닌 경우, 그러니까 실제로 스왑이 필요한 경우에만 스왑 실행
-    if (minNumIndex > i) {
-      [arr[i], arr[minNumIndex]] = [arr[minNumIndex], arr[i]];
-    }
-
-    console.log(arr);
-  }
-
-  return answer;
-}
-
+/**
+ * @param {*} array : input 배열
+ * @param {*} isAscending : 정렬 순서 조건. true면 오름차면, false면 내림차순.
+ * @returns : 정렬된 배열
+ */
 function selectionSort(arr, isAscending) {
   let Index;
   let answer = arr;
 
-  // 제일 마지막 인덱스가 minIndex가 될 때는 더이상 비교할 요소들이 없기이 반복 조건을 배열 길이 - 1로 세팅.
+  // 제일 마지막 인덱스가 Index가 될 때는 더이상 비교할 요소들이 없기이 반복 조건을 배열 길이 - 1로 세팅.
   for (let i = 0; i < arr.length - 1; i++) {
     Index = i;
 
@@ -135,4 +88,4 @@ function insertionSort(array, isAscending) {
   return answer;
 }
 
-export { bubbleSort, descendingSelectionSort, ascendingSelectionSort, insertionSort, selectionSort };
+export { bubbleSort, insertionSort, selectionSort };
